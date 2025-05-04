@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
+from .views import Home
 
 urlpatterns = [
+    
+    path('', Home.as_view()),
     path('', views.index, name="index"),
     path('search', views.search, name="search"),
     path('create-course', views.create_course, name="create_course"),
