@@ -4,6 +4,10 @@ from .models import Course, Category, UploadModel
 from django.core.paginator import Paginator
 import random
 import os
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def index(request):
     kurslar = Course.objects.filter(isActive=1, isHome=1)
@@ -107,3 +111,10 @@ def getCoursesByCategory(request, slug):
         'seciliKategori': slug
     })
 
+class Home(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        content = {'message': 'Hello, World!'}
+        return Response(content)
